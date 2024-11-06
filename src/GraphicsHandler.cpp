@@ -47,10 +47,8 @@ namespace NdRenderer
 	{
         GraphicsPipelineStateCreateInfo PSOCreateInfo;
         PSOCreateInfo.PSODesc.Name = "Simple triangle PSO";
-
         // This is a graphics pipeline
         PSOCreateInfo.PSODesc.PipelineType = PIPELINE_TYPE_GRAPHICS;
-
         // This tutorial will render to a single render target
         PSOCreateInfo.GraphicsPipeline.NumRenderTargets = 1;
         // Set render target format which is the format of the swap chain's color buffer

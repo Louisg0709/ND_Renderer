@@ -11,7 +11,11 @@ add_subdirectory(DiligentCore)
 
 set(SourceFiles
 	src/App.cpp
+	include/App.h
 	src/GraphicsHandler.cpp
+	include/GraphicsHandler.h
+	src/MyMaths.cpp
+	include/MyMaths.h
 )
 
 add_library(NdRenderer STATIC ${SourceFiles})

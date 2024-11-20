@@ -18,7 +18,13 @@ set(SourceFiles
 	include/MyMaths.h
 )
 
-add_library(NdRenderer STATIC ${SourceFiles})
+set(ShaderFiles
+	assets/shaders/triangle.psh
+	assets/shaders/triangle.vsh
+)
+source_group("Shaders" FILES ${ShaderFiles})
+
+add_library(NdRenderer STATIC ${SourceFiles} ${ShaderFiles})
 
 target_link_libraries(NdRenderer
 	glfw

@@ -32,3 +32,6 @@ include_directories(include)
 
 add_executable(Test src/main.cpp)
 target_link_libraries(Test NdRenderer)
+
+#Copy assets to compile directory
+file(COPY ${CMAKE_SOURCE_DIR}/Assets DESTINATION ${CMAKE_BINARY_DIR})

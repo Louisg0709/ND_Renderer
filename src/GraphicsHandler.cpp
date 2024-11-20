@@ -49,7 +49,6 @@ namespace NdRenderer
         PSOCreateInfo.PSODesc.Name = "Simple triangle PSO";
         // This is a graphics pipeline
         PSOCreateInfo.PSODesc.PipelineType = PIPELINE_TYPE_GRAPHICS;
-        // This tutorial will render to a single render target
         PSOCreateInfo.GraphicsPipeline.NumRenderTargets = 1;
         // Set render target format which is the format of the swap chain's color buffer
         PSOCreateInfo.GraphicsPipeline.RTVFormats[0] = m_pSwapChain->GetDesc().ColorBufferFormat;
@@ -63,29 +62,31 @@ namespace NdRenderer
         PSOCreateInfo.GraphicsPipeline.DepthStencilDesc.DepthEnable = False;
         // clang-format on
 
+        RefCntAutoPtr<IShaderSourceInputStreamFactory> pShaderSourceFactory;
+        m_pEngineFactory->CreateDefaultShaderSourceStreamFactory("Assets/Shaders/", &pShaderSourceFactory);
+
         ShaderCreateInfo ShaderCI;
         // Tell the system that the shader source code is in HLSL.
-        // For OpenGL, the engine will convert this into GLSL under the hood.
         ShaderCI.SourceLanguage = SHADER_SOURCE_LANGUAGE_HLSL;
-        // OpenGL backend requires emulated combined HLSL texture samplers (g_Texture + g_Texture_sampler combination)
-        ShaderCI.Desc.UseCombinedTextureSamplers = true;
         // Create a vertex shader
         RefCntAutoPtr<IShader> pVS;
         {
+            ShaderCI.pShaderSourceStreamFactory = pShaderSourceFactory;
             ShaderCI.Desc.ShaderType = SHADER_TYPE_VERTEX;
             ShaderCI.EntryPoint = "main";
             ShaderCI.Desc.Name = "Triangle vertex shader";
-            ShaderCI.Source = VSSource;
+            ShaderCI.FilePath = "triangle.vsh";
             m_pDevice->CreateShader(ShaderCI, &pVS);
         }
 
         // Create a pixel shader
         RefCntAutoPtr<IShader> pPS;
         {
+            ShaderCI.pShaderSourceStreamFactory = pShaderSourceFactory;
             ShaderCI.Desc.ShaderType = SHADER_TYPE_PIXEL;
             ShaderCI.EntryPoint = "main";
             ShaderCI.Desc.Name = "Triangle pixel shader";
-            ShaderCI.Source = PSSource;
+            ShaderCI.FilePath = "triangle.psh";
             m_pDevice->CreateShader(ShaderCI, &pPS);
         }
 
